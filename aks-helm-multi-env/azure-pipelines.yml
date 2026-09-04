@@ -62,7 +62,7 @@ stages:
               chartType: 'FilePath'
               chartPath: '$(Build.SourcesDirectory)/aks-helm-multi-env/helm/my-app'
               releaseName: 'my-app-dev'
-              arguments: '--install -f $(System.DefaultWorkingDirectory)/$(helmChartPath)/values.dev.yaml'
+              arguments: '--install -f $(Build.SourcesDirectory)/aks-helm-multi-env/helm/my-app/values.dev.yaml'
               overrideValues: 'image.tag=$(Build.BuildId)'
 
 - stage: DeployToQA
@@ -88,11 +88,11 @@ stages:
             displayName: Helm Upgrade/Install (QA)
             inputs:
               azureSubscription: '$(aksServiceConnection)'
-              azureResourceGroup: 'demo'
-              kubernetesCluster: 'my-aks-cluster'
+              azureResourceGroup: 'rgup'
+              kubernetesCluster: 'aks-anishka'
               command: 'upgrade'
               chartType: 'FilePath'
               chartPath: '$(System.DefaultWorkingDirectory)/$(helmChartPath)'
               releaseName: 'my-app-qa'
-              arguments: '--install -f $(System.DefaultWorkingDirectory)/$(helmChartPath)/values.qa.yaml'
+              arguments: '--install -f $(System.DefaultWorkingDirectory)/aks-helm-multi-env/helm/my-app/values.qa.yaml'
               overrideValues: 'image.tag=$(Build.BuildId)'
