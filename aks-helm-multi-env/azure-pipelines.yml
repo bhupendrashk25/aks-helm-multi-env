@@ -23,7 +23,7 @@ stages:
         containerRegistry: '$(dockerRegistryServiceConnection)'
         repository: '$(imageRepository)'
         command: 'buildAndPush'
-        Dockerfile: 'app/Dockerfile'
+        Dockerfile: '$(Build.SourcesDirectory)/aks-helm-multi-env/app/Dockerfile'
         tags: |
           $(Build.BuildId)
           latest
