@@ -60,7 +60,7 @@ stages:
               kubernetesCluster: 'my-aks-cluster'
               command: 'upgrade'
               chartType: 'FilePath'
-              chartPath: '$(System.DefaultWorkingDirectory)/$(helmChartPath)'
+              chartPath: '$(Build.SourcesDirectory)/aks-helm-multi-env/helm/my-app'
               releaseName: 'my-app-dev'
               arguments: '--install -f $(System.DefaultWorkingDirectory)/$(helmChartPath)/values.dev.yaml'
               overrideValues: 'image.tag=$(Build.BuildId)'
