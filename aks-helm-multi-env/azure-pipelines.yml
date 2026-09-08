@@ -6,8 +6,8 @@ pool:
 
 variables:
   imageRepository: 'my-app' # The name of your Docker image in ACR
-  dockerRegistryServiceConnection: 'myacr' # Your Azure Container Registry service connection name
-  aksServiceConnection: 'Azure service connection' # Your AKS cluster service connection name
+  dockerRegistryServiceConnection: 'acr-svc' # Your Azure Container Registry service connection name
+  aksServiceConnection: 'aks-svc' # Your AKS cluster service connection name
   helmChartPath: 'aks-helm-multi-env/helm/my-app' # Path to Helm chart in repo
 
 stages:
@@ -20,7 +20,7 @@ stages:
     - task: Docker@2
       displayName: Build and Push Docker Image
       inputs:
-        containerRegistry: '$(dockerRegistryServiceConnection)'
+        containerRegistry: 'testacraks'
         repository: '$(imageRepository)'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/aks-helm-multi-env/app/Dockerfile'
@@ -56,8 +56,8 @@ stages:
             displayName: Helm Upgrade/Install (Dev)
             inputs:
               azureSubscription: '$(aksServiceConnection)'
-              azureResourceGroup: 'demo'
-              kubernetesCluster: 'my-aks-cluster'
+              azureResourceGroup: 'rgup'
+              kubernetesCluster: 'aks-anishka'
               command: 'upgrade'
               chartType: 'FilePath'
               chartPath: '$(Build.SourcesDirectory)/aks-helm-multi-env/helm/my-app'
